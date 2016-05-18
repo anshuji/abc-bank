@@ -6,16 +6,25 @@ import java.util.List;
 public class Bank {
     private List<Customer> customers;
 
+    public void setCustomers(List<Customer> customerList){
+        this.customers=customerList;
+    }
+    
+    public List<Customer> getCustomerList(){
+        this.customers;
+    }
+    
     public Bank() {
         customers = new ArrayList<Customer>();
     }
 
     public void addCustomer(Customer customer) {
-        customers.add(customer);
+        this.customers.add(customer);
     }
 
-    public String customerSummary() {
+    public String customerSummary(Bank bank) {
         String summary = "Customer Summary";
+        Customer customers = bank.getCustomerList();
         for (Customer c : customers)
             summary += "\n - " + c.getName() + " (" + format(c.getNumberOfAccounts(), "account") + ")";
         return summary;
@@ -27,8 +36,10 @@ public class Bank {
         return number + " " + (number == 1 ? word : word + "s");
     }
 
-    public double totalInterestPaid() {
+    public double totalInterestPaid(Bank bank) {
         double total = 0;
+        Customer customers = bank.getCustomerList();
+
         for(Customer c: customers)
             total += c.totalInterestEarned();
         return total;
@@ -36,9 +47,13 @@ public class Bank {
 
     public String getFirstCustomer() {
         try {
-            customers = null;
+            if(customers !=null & customers.get(0)!=null){
+            //customers = null;
             return customers.get(0).getName();
+            }
+        return null;
         } catch (Exception e){
+            // or we can throw the same to the calling method
             e.printStackTrace();
             return "Error";
         }
