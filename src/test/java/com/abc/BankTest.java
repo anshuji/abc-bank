@@ -13,8 +13,9 @@ public class BankTest {
         Customer john = new Customer("John");
         john.openAccount(new Account(Account.CHECKING));
         bank.addCustomer(john);
-
-        assertEquals("Customer Summary\n - John (1 account)", bank.customerSummary());
+		// we could have used mockito over here to mock the response from various method within , but as there is no database hit we are not bothered about
+		// runtime db connection exceptions and so not using mock , otherwise we can use the same .
+        assertEquals("Customer Summary\n - John (1 account)", bank.customerSummary(bank));
     }
 
     @Test
@@ -26,7 +27,7 @@ public class BankTest {
 
         checkingAccount.deposit(100.0);
 
-        assertEquals(0.1, bank.totalInterestPaid(), DOUBLE_DELTA);
+        assertEquals(0.1, bank.totalInterestPaid(bank), DOUBLE_DELTA);
     }
 
     @Test
@@ -37,7 +38,7 @@ public class BankTest {
 
         checkingAccount.deposit(1500.0);
 
-        assertEquals(2.0, bank.totalInterestPaid(), DOUBLE_DELTA);
+        assertEquals(2.0, bank.totalInterestPaid(bank), DOUBLE_DELTA);
     }
 
     @Test
@@ -48,7 +49,7 @@ public class BankTest {
 
         checkingAccount.deposit(3000.0);
 
-        assertEquals(170.0, bank.totalInterestPaid(), DOUBLE_DELTA);
+        assertEquals(170.0, bank.totalInterestPaid(bank), DOUBLE_DELTA);
     }
 
 }
