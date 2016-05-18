@@ -36,9 +36,13 @@ public class Bank {
 
     public String getFirstCustomer() {
         try {
-            customers = null;
+            if(customers !=null & customers.get(0)!=null){
+            //customers = null;
             return customers.get(0).getName();
+            }
+        return null;
         } catch (Exception e){
+            // or we can throw the same to the calling method
             e.printStackTrace();
             return "Error";
         }
