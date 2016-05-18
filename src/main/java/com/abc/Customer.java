@@ -9,6 +9,12 @@ public class Customer {
     private String name;
     private List<Account> accounts;
 
+    public List<Account> getAccounts(){
+	return accounts ;}
+
+    public void setAccounts (List<Account> accountList ){
+	this.accounts=accountList ; }
+
     public Customer(String name) {
         this.name = name;
         this.accounts = new ArrayList<Account>();
@@ -19,18 +25,20 @@ public class Customer {
     }
 
     public Customer openAccount(Account account) {
-        accounts.add(account);
+        this.accounts.add(account);
         return this;
     }
 
     public int getNumberOfAccounts() {
-        return accounts.size();
+        return this.accounts.size();
     }
 
-    public double totalInterestEarned() {
+    public double totalInterestEarned(Customer customer) {
         double total = 0;
+        Account accounts= customer.getAccounts();
+
         for (Account a : accounts)
-            total += a.interestEarned();
+            total += a.interestEarned(a);
         return total;
     }
 
@@ -38,7 +46,7 @@ public class Customer {
         String statement = null;
         statement = "Statement for " + name + "\n";
         double total = 0.0;
-        for (Account a : accounts) {
+        for (Account a : this.getAccounts()) {
             statement += "\n" + statementForAccount(a) + "\n";
             total += a.sumTransactions();
         }
@@ -64,7 +72,7 @@ public class Customer {
 
         //Now total up all the transactions
         double total = 0.0;
-        for (Transaction t : a.transactions) {
+        for (Transaction t : a.getTransactions()) {
             s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + toDollars(t.amount) + "\n";
             total += t.amount;
         }
@@ -75,4 +83,20 @@ public class Customer {
     private String toDollars(double d){
         return String.format("$%,.2f", abs(d));
     }
+	
+	//tis method will transfer amount between accounts , from account1 to account2 depending upon weather it has that minimum amount or not
+	public boolean transferBWAccounts(Account account1,Account account2,double amount) {
+		
+		double account1Balance = 0.0;
+        account1Balance = account1.sumTransactions();
+        
+		//can use sql transactions as well when we will implement database in the same
+		if(amount>0 & account1Balance > amount){
+        account1.withdraw(amount);
+		account2.deposit(amount);
+		return true;
+        }
+		return false;
+    }
+
 }
