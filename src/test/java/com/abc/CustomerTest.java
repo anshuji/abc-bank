@@ -46,7 +46,7 @@ public class CustomerTest {
         oscar.openAccount(new Account(Account.CHECKING));
         assertEquals(2, oscar.getNumberOfAccounts());
     }
-
+ 
     @Ignore
     public void testThreeAcounts() {
         Customer oscar = new Customer("Oscar")
