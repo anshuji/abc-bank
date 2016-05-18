@@ -86,6 +86,9 @@ public void withdraw(double amount) {
 				int_Rate_Fourth = 0.001/365;
 
 				//need to add condition to check if any withdrawals made in last 10 days and accordingly change the rate
+				// if (currentTime - transaction.getTime) > 10 days 
+				// have not written code using eclipse so avoiding compile time error
+				// get current time via (Calender.getInstance - transaction.getTime)>10days
 				if( ){
 				int_Rate_First = 0.05/365;
 				int_Rate_Third = 0.05/365;
