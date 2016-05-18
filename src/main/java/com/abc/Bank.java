@@ -6,6 +6,14 @@ import java.util.List;
 public class Bank {
     private List<Customer> customers;
 
+    public void setCustomers(List<Customer> customerList){
+        this.customers=customerList;
+    }
+    
+    public List<Customer> getCustomerList(){
+        this.customers;
+    }
+    
     public Bank() {
         customers = new ArrayList<Customer>();
     }
@@ -14,8 +22,9 @@ public class Bank {
         customers.add(customer);
     }
 
-    public String customerSummary() {
+    public String customerSummary(Bank bank) {
         String summary = "Customer Summary";
+        Customer customers = bank.getCustomerList();
         for (Customer c : customers)
             summary += "\n - " + c.getName() + " (" + format(c.getNumberOfAccounts(), "account") + ")";
         return summary;
